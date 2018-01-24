@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>把爬取到的数据存储到execl中 | Python绿色通道</title>
+  <meta name="description" content="操作Execl其实里面很多东西要去了解，但这里我讲常用的读写，满足我们的一般需求,感兴趣的朋友可以自己去深入。 ###1. 读execl文件需要安装 xlrd库，老办法，直接在setting中安装，然后导入放可使用python读取execl 1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把爬取到的数据存储到execl中">
+<meta property="og:url" content="http://yoursite.com/2018/01/24/把爬取的数据存储到execl中/index.html">
+<meta property="og:site_name" content="Python绿色通道">
+<meta property="og:description" content="操作Execl其实里面很多东西要去了解，但这里我讲常用的读写，满足我们的一般需求,感兴趣的朋友可以自己去深入。 ###1. 读execl文件需要安装 xlrd库，老办法，直接在setting中安装，然后导入放可使用python读取execl 1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-24T07:58:44.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="把爬取到的数据存储到execl中">
+<meta name="twitter:description" content="操作Execl其实里面很多东西要去了解，但这里我讲常用的读写，满足我们的一般需求,感兴趣的朋友可以自己去深入。 ###1. 读execl文件需要安装 xlrd库，老办法，直接在setting中安装，然后导入放可使用python读取execl 1234567891011121314151617181920212223242526272829303132333435363738394041424344">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yoursite.com/2018/01/24/把爬取的数据存储到execl中/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Python绿色通道" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/pythonchannel" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Python绿色通道</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Python技术布道者</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳，中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>让自己成长才是头等大事!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python基础/">python基础</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/python基础/" style="font-size: 13px;">python基础</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/归档/2018/01/">一月 2018</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/python-file/" class="title">python_file</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T09:25:34.000Z" itemprop="datePublished">2018-01-24 17:25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python中安装与使用mysql/" class="title">Python中安装与使用mysql</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程2/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程1/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/为什么要学习Python以及Python环境安装/" class="title">为什么要学习Python以及Python环境安装</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-把爬取的数据存储到execl中" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      把爬取到的数据存储到execl中
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/01/24/把爬取的数据存储到execl中/" class="article-date">
+	  <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/01/24/把爬取的数据存储到execl中/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p>操作Execl其实里面很多东西要去了解，但这里我讲常用的读写，满足我们的一般需求,感兴趣的朋友可以自己去深入。</p>
+<p>###1. 读execl文件<br>需要安装 xlrd库，老办法，直接在setting中安装，然后导入放可使用python读取execl</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"></span><br><span class="line">data = xlrd.open_workbook(<span class="string">'execl_file.xlsx'</span>)</span><br><span class="line">table = data.sheets()[<span class="number">0</span>]    <span class="comment">#通过索引顺序获取table, 一个execl文件一般都至少有一个table</span></span><br><span class="line"><span class="keyword">print</span> table.nrows   <span class="comment">#行数</span></span><br><span class="line"><span class="keyword">print</span> table.ncols   <span class="comment">#列数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(table.nrows):    <span class="comment">#遍历行数据</span></span><br><span class="line">    <span class="keyword">print</span> table.row_values(k)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(table.ncols):    <span class="comment">#便利列数据</span></span><br><span class="line">    <span class="keyword">print</span> table.col_values(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> table.cell(<span class="number">2</span>,<span class="number">2</span>).value     <span class="comment">#获取单元格数据，前一个是行数，从0开始，后一个是列数，且列数从0开始</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> range(<span class="number">1</span>,table.nrows):        <span class="comment">#行数据，我正好要去掉第1行标题</span></span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> range(table.ncols):</span><br><span class="line">          <span class="keyword">print</span> table.cell(a,b).value   </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'----------------------'</span></span><br><span class="line"></span><br><span class="line">得到结果：</span><br><span class="line"></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">[<span class="string">u'\u54c1\u724c'</span>, <span class="string">u'size'</span>, <span class="string">u'\u4ef7\u683c'</span>, <span class="string">u'\u6027\u522b'</span>]</span><br><span class="line">[<span class="string">u'Nike'</span>, <span class="number">90.0</span>, <span class="number">1033.0</span>, <span class="string">u'\u7537'</span>]</span><br><span class="line">[<span class="string">u'addida'</span>, <span class="number">88.0</span>, <span class="number">444.0</span>, <span class="string">u'\u5973'</span>]</span><br><span class="line">[<span class="string">u'zara'</span>, <span class="number">87.0</span>, <span class="number">333.0</span>, <span class="string">u'\u7537'</span>]</span><br><span class="line">[<span class="string">u'Lining'</span>, <span class="number">33.0</span>, <span class="number">22.0</span>, <span class="string">u'\u7537'</span>]</span><br><span class="line">[<span class="string">u'kappa'</span>, <span class="number">33.0</span>, <span class="number">222.0</span>, <span class="string">u'\u7537'</span>]</span><br><span class="line">[<span class="string">u'\u54c1\u724c'</span>, <span class="string">u'Nike'</span>, <span class="string">u'addida'</span>, <span class="string">u'zara'</span>, <span class="string">u'Lining'</span>, <span class="string">u'kappa'</span>]</span><br><span class="line">[<span class="string">u'size'</span>, <span class="number">90.0</span>, <span class="number">88.0</span>, <span class="number">87.0</span>, <span class="number">33.0</span>, <span class="number">33.0</span>]</span><br><span class="line">[<span class="string">u'\u4ef7\u683c'</span>, <span class="number">1033.0</span>, <span class="number">444.0</span>, <span class="number">333.0</span>, <span class="number">22.0</span>, <span class="number">222.0</span>]</span><br><span class="line">[<span class="string">u'\u6027\u522b'</span>, <span class="string">u'\u7537'</span>, <span class="string">u'\u5973'</span>, <span class="string">u'\u7537'</span>, <span class="string">u'\u7537'</span>, <span class="string">u'\u7537'</span>]</span><br><span class="line"><span class="number">444.0</span></span><br><span class="line">Nike</span><br><span class="line"><span class="number">90.0</span></span><br><span class="line"><span class="number">1033.0</span></span><br><span class="line">男</span><br><span class="line">----------------------</span><br><span class="line">addida</span><br><span class="line"><span class="number">88.0</span></span><br><span class="line"><span class="number">444.0</span></span><br><span class="line">女</span><br><span class="line">----------------------</span><br><span class="line">zara</span><br><span class="line"><span class="number">87.0</span></span><br><span class="line"><span class="number">333.0</span></span><br><span class="line">男</span><br><span class="line">----------------------</span><br><span class="line">Lining</span><br><span class="line"><span class="number">33.0</span></span><br><span class="line"><span class="number">22.0</span></span><br><span class="line">男</span><br><span class="line">----------------------</span><br><span class="line">kappa</span><br><span class="line"><span class="number">33.0</span></span><br><span class="line"><span class="number">222.0</span></span><br><span class="line">男</span><br><span class="line">----------------------</span><br></pre></td></tr></table></figure>
+<p>很简单没有什么要解释的了</p>
+<h3 id="2-复习一下range函数"><a href="#2-复习一下range函数" class="headerlink" title="2. 复习一下range函数"></a>2. 复习一下range函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># &gt;&gt;&gt; range(1,5) #代表从1到5(不包含5)</span><br><span class="line"># [1, 2, 3, 4]</span><br><span class="line"># &gt;&gt;&gt; range(1,5,2) #代表从1到5，间隔2(不包含5)</span><br><span class="line"># [1, 3]</span><br><span class="line"># &gt;&gt;&gt; range(5) #代表从0到5(不包含5)</span><br><span class="line"># [0, 1, 2, 3, 4]</span><br></pre></td></tr></table></figure>
+<h3 id="3-写入execl"><a href="#3-写入execl" class="headerlink" title="3. 写入execl"></a>3. 写入execl</h3><p>需要安装xlwt库，老办法自己先安装，不多说了,需要导入xlwt然后放可使用python写入数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlwt.Workbook(encoding=<span class="string">'utf-8'</span>)<span class="comment">#创建workbook 其实就是execl，</span></span><br><span class="line">worksheet = workbook.add_sheet(<span class="string">'my_worksheet'</span>) <span class="comment">#创建表，如果想创建多个，直接在后面再add_sheet</span></span><br><span class="line">worksheet.write(<span class="number">0</span>,<span class="number">0</span>,label =<span class="string">'Row 0,Column 0 Value'</span>)		 <span class="comment">#3个参数，第一个参数表示行，从0开始，第二个参数表示列从0开始，第三个参数表示插入的数值 </span></span><br><span class="line">workbook.save(<span class="string">'execl_liu.xlsx'</span>)		<span class="comment">#写完记得一定要保存</span></span><br></pre></td></tr></table></figure>
+<p>完整实例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">f = xlwt.Workbook() <span class="comment">#创建工作薄</span></span><br><span class="line"><span class="comment">#创建个人信息表</span></span><br><span class="line">sheet1 = f.add_sheet(<span class="string">u'个人信息'</span>,cell_overwrite_ok=<span class="keyword">True</span>)</span><br><span class="line">rowTitle = [<span class="string">u'编号'</span>,<span class="string">u'姓名'</span>,<span class="string">u'性别'</span>,<span class="string">u'年龄'</span>]</span><br><span class="line">rowDatas = [[<span class="string">u'张一'</span>,<span class="string">u'男'</span>,<span class="string">u'18'</span>],[<span class="string">u'李二'</span>,<span class="string">u'女'</span>,<span class="string">u'20'</span>],[<span class="string">u'黄三'</span>,<span class="string">u'男'</span>,<span class="string">u'38'</span>],[<span class="string">u'刘四'</span>,<span class="string">u'男'</span>,<span class="string">u'88'</span>]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(rowTitle)):</span><br><span class="line">    sheet1.write(<span class="number">0</span>,i,rowTitle[i],set_style(<span class="string">'Times new Roman'</span>,<span class="number">220</span>,<span class="keyword">True</span>)) 后面是设置样式</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>,len(rowDatas)):    <span class="comment">#先遍历外层的集合，即每行数据</span></span><br><span class="line">    rowDatas[k].insert(<span class="number">0</span>,k+<span class="number">1</span>)   <span class="comment">#每一行数据插上编号即为每一个人插上编号</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(rowDatas[k])): <span class="comment">#再遍历内层集合</span></span><br><span class="line">        sheet1.write(k+<span class="number">1</span>,j,rowDatas[k][j])          <span class="comment">#写入数据,k+1表示先去掉标题行，另外每一行数据也会变化,j正好表示第一列数据的变化，rowdatas[k][j] 插入数据</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建个人收入表</span></span><br><span class="line">sheet1 = f.add_sheet(<span class="string">u'个人收入表'</span>,cell_overwrite_ok=<span class="keyword">True</span>)</span><br><span class="line">rowTitle2 = [<span class="string">u'编号'</span>,<span class="string">u'姓名'</span>,<span class="string">u'学历'</span>,<span class="string">u'工资'</span>]</span><br><span class="line">rowDatas2 = [[<span class="string">u'张一'</span>,<span class="string">u'本科'</span>,<span class="string">u'8000'</span>],[<span class="string">u'李二'</span>,<span class="string">u'硕士'</span>,<span class="string">u'10000'</span>],[<span class="string">u'黄三'</span>,<span class="string">u'博士'</span>,<span class="string">u'20000'</span>],[<span class="string">u'刘四'</span>,<span class="string">u'教授'</span>,<span class="string">u'50000'</span>]]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(rowTitle2)):</span><br><span class="line">    sheet1.write(<span class="number">0</span>,i,rowTitle2[i])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>,len(rowDatas2)):    <span class="comment">#先遍历外层的集合</span></span><br><span class="line">    rowDatas2[k].insert(<span class="number">0</span>,k+<span class="number">1</span>)   <span class="comment">#每一行数据插上编号即为每一个人插上编号</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(rowDatas2[k])): <span class="comment">#再遍历内层集合</span></span><br><span class="line">        sheet1.write(k+<span class="number">1</span>,j,rowDatas2[k][j])          <span class="comment">#写入数据,k+1表示先去掉标题行，另外每一行数据也会变化,j正好表示第一列数据的变化，rowdatas[k][j] 插入数据</span></span><br><span class="line"></span><br><span class="line">f.save(<span class="string">'info.xlsx'</span>)</span><br></pre></td></tr></table></figure>
+<p>最后得到的效果图</p>
+<h3 id="3-把爬取的猪八戒数据插入到execl中"><a href="#3-把爬取的猪八戒数据插入到execl中" class="headerlink" title="3. 把爬取的猪八戒数据插入到execl中"></a>3. 把爬取的猪八戒数据插入到execl中</h3><p>这里直接上代码了，相关的注释都在代码里</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> xlwt</span><br><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZbjData</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">     self.f = xlwt.Workbook()   <span class="comment">#创建工作薄</span></span><br><span class="line">     self.sheet1 = self.f.add_sheet(<span class="string">u'任务列表'</span>,cell_overwrite_ok=<span class="keyword">True</span>)</span><br><span class="line">     self.rowsTitle = [<span class="string">u'编号'</span>,<span class="string">u'标题'</span>,<span class="string">u'简介'</span>,<span class="string">u'价格'</span>,<span class="string">u'截止时间'</span>,<span class="string">u'链接'</span>]</span><br><span class="line">     <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(self.rowsTitle)):</span><br><span class="line">        self.sheet1.write(<span class="number">0</span>, i, self.rowsTitle[i], self.set_style(<span class="string">'Times new Roman'</span>, <span class="number">220</span>, <span class="keyword">True</span>))</span><br><span class="line"></span><br><span class="line">     self.f.save(<span class="string">'zbj.xlsx'</span>)</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">set_style</span><span class="params">(self,name, height, bold=False)</span>:</span></span><br><span class="line">        style = xlwt.XFStyle()  <span class="comment"># 初始化样式</span></span><br><span class="line">        font = xlwt.Font()  <span class="comment"># 为样式创建字体</span></span><br><span class="line">        font.name = name</span><br><span class="line">        font.bold = bold</span><br><span class="line">        font.colour_index = <span class="number">2</span></span><br><span class="line">        font.height = height</span><br><span class="line">        style.font = font</span><br><span class="line">        <span class="keyword">return</span> style</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">getUrl</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">33</span>):</span><br><span class="line">        url = <span class="string">'http://task.zbj.com/t-ppsj/p&#123;&#125;s5.html'</span>.format(i+<span class="number">1</span>)</span><br><span class="line">        self.spiderPage(url)</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">spiderPage</span><span class="params">(self,url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = xlrd.open_workbook(<span class="string">'zbj.xlsx'</span>)</span><br><span class="line">        table = data.sheets()[<span class="number">0</span>]  <span class="comment"># 通过索引顺序获取table, 一个execl文件一般都至少有一个table</span></span><br><span class="line">        rowCount = table.nrows      <span class="comment">#获取行数   ，下次从这一行开始</span></span><br><span class="line">        proxies = &#123;</span><br><span class="line">            <span class="string">'http'</span>: <span class="string">'http://221.202.248.52:80'</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        user_agent = <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400'</span></span><br><span class="line"></span><br><span class="line">        headers = &#123;<span class="string">'User-Agent'</span>: user_agent&#125;</span><br><span class="line">        htmlText = requests.get(url, headers=headers,proxies=proxies).text</span><br><span class="line"></span><br><span class="line">        selector = etree.HTML(htmlText)</span><br><span class="line">        tds = selector.xpath(<span class="string">'//*[@class="tab-switch tab-progress"]/table/tr'</span>)</span><br><span class="line">        m = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> td <span class="keyword">in</span> tds:</span><br><span class="line">             data = []</span><br><span class="line">             price = td.xpath(<span class="string">'./td/p/em/text()'</span>)</span><br><span class="line">             href = td.xpath(<span class="string">'./td/p/a/@href'</span>)</span><br><span class="line">             title = td.xpath(<span class="string">'./td/p/a/text()'</span>)</span><br><span class="line">             subTitle = td.xpath(<span class="string">'./td/p/text()'</span>)</span><br><span class="line">             deadline = td.xpath(<span class="string">'./td/span/text()'</span>)</span><br><span class="line">             price = price[<span class="number">0</span>] <span class="keyword">if</span> len(price)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span>    <span class="comment"># python的三目运算 :为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">             title = title[<span class="number">0</span>] <span class="keyword">if</span> len(title)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             href = href[<span class="number">0</span>] <span class="keyword">if</span> len(href)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             subTitle = subTitle[<span class="number">0</span>] <span class="keyword">if</span> len(subTitle)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             deadline = deadline[<span class="number">0</span>] <span class="keyword">if</span> len(deadline)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">#拼装成一个集合</span></span><br><span class="line">             data.append(rowCount+m)    <span class="comment">#加个序号</span></span><br><span class="line">             data.append(title)</span><br><span class="line">             data.append(subTitle)</span><br><span class="line">             data.append(price)</span><br><span class="line">             data.append(deadline)</span><br><span class="line">             data.append(href)</span><br><span class="line"></span><br><span class="line">             <span class="keyword">for</span> i <span class="keyword">in</span> range(len(data)):</span><br><span class="line">                 self.sheet1.write(rowCount+m,i,data[i])    <span class="comment">#写入数据到execl中</span></span><br><span class="line"></span><br><span class="line">             m+=<span class="number">1</span>   <span class="comment">#记录行数增量</span></span><br><span class="line">             <span class="keyword">print</span> m</span><br><span class="line">             <span class="keyword">print</span> price, title, href, subTitle, deadline</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'出错'</span>,e.message</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        self.f.save(<span class="string">'zbj.xlsx'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">'_main_'</span>:</span><br><span class="line">    zbj = ZbjData()</span><br><span class="line">    zbj.getUrl()</span><br></pre></td></tr></table></figure>
+<p>注意这里爬取数据的时候，有的代理ip还是被禁用了，所以获取数据有失败的情况，所以这里需要有异常处理.</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yoursite.com/2018/01/24/把爬取的数据存储到execl中/" title="把爬取到的数据存储到execl中" target="_blank" rel="external">http://yoursite.com/2018/01/24/把爬取的数据存储到execl中/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/pythonchannel" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/pythonchannel" target="_blank"><span class="text-dark">Python绿色通道</span><small class="ml-1x">Python技术布道者</small></a></h3>
+        <div>老司机带你零基础玩转Python 爬虫，数据分析，机器学习，人工智能！</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/01/24/为什么要学习Python以及Python环境安装/" title="为什么要学习Python以及Python环境安装"><i class="icon icon-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/24/爬虫前准备/" title="爬虫前准备">下一篇&nbsp;&nbsp;<i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>

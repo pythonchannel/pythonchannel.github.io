@@ -16,20 +16,20 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Python绿色通道</title>
-  <meta name="description" content="老司机带你零基础玩Python爬虫，数据分析，机器学习，人工智能">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Python绿色通道">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <title>Python中安装与使用mysql | Python绿色通道</title>
+  <meta name="description" content="注意： 获取mysql工具包，请在公众号后台回复mysql，花了好长时间找齐的最新工具包。 安装教程：http://blog.csdn.net/zhouzezhou/article/details/52446608 但是这个安装教程还有一点点缺陷,出现了一个错误：win10解决Mysql net start mysql启动,提示发生系统错误 5 拒绝访问，因为我不是管理员，所以这里需要再设置永远使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中安装与使用mysql">
+<meta property="og:url" content="http://yoursite.com/2018/01/24/Python中安装与使用mysql/index.html">
 <meta property="og:site_name" content="Python绿色通道">
-<meta property="og:description" content="老司机带你零基础玩Python爬虫，数据分析，机器学习，人工智能">
+<meta property="og:description" content="注意： 获取mysql工具包，请在公众号后台回复mysql，花了好长时间找齐的最新工具包。 安装教程：http://blog.csdn.net/zhouzezhou/article/details/52446608 但是这个安装教程还有一点点缺陷,出现了一个错误：win10解决Mysql net start mysql启动,提示发生系统错误 5 拒绝访问，因为我不是管理员，所以这里需要再设置永远使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-24T10:02:32.201Z">
+<meta property="og:updated_time" content="2018-01-24T08:00:06.465Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python绿色通道">
-<meta name="twitter:description" content="老司机带你零基础玩Python爬虫，数据分析，机器学习，人工智能">
+<meta name="twitter:title" content="Python中安装与使用mysql">
+<meta name="twitter:description" content="注意： 获取mysql工具包，请在公众号后台回复mysql，花了好长时间找齐的最新工具包。 安装教程：http://blog.csdn.net/zhouzezhou/article/details/52446608 但是这个安装教程还有一点点缺陷,出现了一个错误：win10解决Mysql net start mysql启动,提示发生系统错误 5 拒绝访问，因为我不是管理员，所以这里需要再设置永远使">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://yoursite.com/archives/index.html">
+  <link rel="canonical" href="http://yoursite.com/2018/01/24/Python中安装与使用mysql/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Python绿色通道" type="application/atom+xml">
   
@@ -344,15 +344,23 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="page-" class="article article-type-page" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-Python中安装与使用mysql" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python中安装与使用mysql
+    </h1>
+  
+
       
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/archives/index.html" class="article-date">
-	  <time datetime="2018-01-24T10:02:32.201Z" itemprop="datePublished">2018-01-24 18:02</time>
+	<a href="/2018/01/24/Python中安装与使用mysql/" class="article-date">
+	  <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
 	</a>
 </span>
         
@@ -367,13 +375,21 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/archives/index.html#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/01/24/Python中安装与使用mysql/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry markdown-body" itemprop="articleBody">
       
-        
+        <p><strong>注意：</strong> 获取mysql工具包，请在公众号后台回复<strong>mysql</strong>，花了好长时间找齐的最新工具包。</p>
+<p><strong>安装教程</strong>：<code>http://blog.csdn.net/zhouzezhou/article/details/52446608</code> 但是这个安装教程还有一点点缺陷,出现了一个错误：<strong>win10解决Mysql net start mysql启动,提示发生系统错误 5 拒绝访问</strong>，因为我不是管理员，所以这里需要再设置永远使用管理员身份来打开cmd，看教程设置 <code>http://blog.csdn.net/oqihaogongyuan/article/details/48423471</code></p>
+<p>###基础教程</p>
+<p><strong>创建数据库</strong><br><code>CREATE DATABASE py_db</code></p>
+<p><strong>增删改查</strong>操作：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#SELECT * FROM `info`;</span><br><span class="line">#INSERT into info VALUES(3,"王五","上海",30)</span><br><span class="line">#UPDATE info set age = 150 where `name` = "张三丰"</span><br><span class="line">#SELECT name,address,age from info</span><br><span class="line">#DELETE FROM info where age = 30</span><br></pre></td></tr></table></figure>
+<p>这里我只是讲了一些mysql基础的东西，满足我们Python中的一些基本需求，有兴趣的朋友自己可以去找相关资料来学习。<br>好了现在我们开始进入正题。</p>
+<p>###使用Python来操作mysql<br>使用<code>python</code>来操作<code>mysql</code>，首先需要在<code>pycharm</code>的setting中安装<code>MYSQL -python</code>，在安装的过程中你也许会遇到一个错误 <code>error: Microsoft Visual C++ 9.0 is required. Get it from http://aka.ms/vcpython27</code></p>
+
       
     </div>
     <div class="article-footer">
@@ -382,7 +398,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://yoursite.com/archives/index.html" title="" target="_blank" rel="external">http://yoursite.com/archives/index.html</a>
+      <a href="http://yoursite.com/2018/01/24/Python中安装与使用mysql/" title="Python中安装与使用mysql" target="_blank" rel="external">http://yoursite.com/2018/01/24/Python中安装与使用mysql/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -427,6 +443,19 @@
 
   <nav class="bar bar-footer clearfix" data-stick-bottom>
   <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/01/24/python-file/" title="python_file"><i class="icon icon-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/24/Python基础教程2/" title="Python基础教程2">下一篇&nbsp;&nbsp;<i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
   
   
   <!-- Button trigger modal -->

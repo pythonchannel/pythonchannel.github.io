@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>爬虫前准备 | Python绿色通道</title>
+  <meta name="description" content="首先说明一下我的爬虫环境是基于py2.x的， 为什么用这个版本呢，因为py2.x的版本支持的多，而且一般会使用py2.x环境，基本在py3.x也没有太大问题，好了，进入正题！ ###urllib 与 urllib2 urllib与urllib2是Python内置的，要实现Http请求，以urllib2为主,urllib为辅.  构建一个请求与响应模型 12345import urllib2strU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫前准备">
+<meta property="og:url" content="http://yoursite.com/2018/01/24/爬虫前准备/index.html">
+<meta property="og:site_name" content="Python绿色通道">
+<meta property="og:description" content="首先说明一下我的爬虫环境是基于py2.x的， 为什么用这个版本呢，因为py2.x的版本支持的多，而且一般会使用py2.x环境，基本在py3.x也没有太大问题，好了，进入正题！ ###urllib 与 urllib2 urllib与urllib2是Python内置的，要实现Http请求，以urllib2为主,urllib为辅.  构建一个请求与响应模型 12345import urllib2strU">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-24T07:57:20.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫前准备">
+<meta name="twitter:description" content="首先说明一下我的爬虫环境是基于py2.x的， 为什么用这个版本呢，因为py2.x的版本支持的多，而且一般会使用py2.x环境，基本在py3.x也没有太大问题，好了，进入正题！ ###urllib 与 urllib2 urllib与urllib2是Python内置的，要实现Http请求，以urllib2为主,urllib为辅.  构建一个请求与响应模型 12345import urllib2strU">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yoursite.com/2018/01/24/爬虫前准备/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Python绿色通道" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/pythonchannel" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Python绿色通道</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Python技术布道者</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳，中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>让自己成长才是头等大事!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python基础/">python基础</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/python基础/" style="font-size: 13px;">python基础</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/归档/2018/01/">一月 2018</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/python-file/" class="title">python_file</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T09:25:34.000Z" itemprop="datePublished">2018-01-24 17:25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python中安装与使用mysql/" class="title">Python中安装与使用mysql</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程2/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程1/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/为什么要学习Python以及Python环境安装/" class="title">为什么要学习Python以及Python环境安装</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-爬虫前准备" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬虫前准备
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/01/24/爬虫前准备/" class="article-date">
+	  <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/01/24/爬虫前准备/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p>首先说明一下我的爬虫环境是基于<code>py2.x</code>的， 为什么用这个版本呢，因为<code>py2.x</code>的版本支持的多，而且一般会使用<code>py2.x</code>环境，基本在<code>py3.x</code>也没有太大问题，好了，进入正题！</p>
+<p>###urllib 与 urllib2<br> <code>urllib</code>与<code>urllib</code>2是<code>Python</code>内置的，要实现<code>Http</code>请求，以<code>urllib2</code>为主,<code>urllib</code>为辅.</p>
+<p><strong> 构建一个请求与响应模型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"></span><br><span class="line">strUrl = <span class="string">"http://www.baidu.com"</span></span><br><span class="line">response = urllib2.urlopen(strUrl)</span><br><span class="line"><span class="keyword">print</span> response.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">得到：</span><br><span class="line">&lt;div class=&quot;s_tab&quot; id=&quot;s_tab&quot;&gt;</span><br><span class="line">    &lt;b&gt;网页&lt;/b&gt;&lt;a href=&quot;http://news.baidu.com/ns?cl=2&amp;rn=20&amp;tn=news&amp;word=&quot; wdfield=&quot;word&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;news&apos;&#125;)&quot;&gt;新闻&lt;/a&gt;&lt;a href=&quot;http://tieba.baidu.com/f?kw=&amp;fr=wwwt&quot; wdfield=&quot;kw&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;tieba&apos;&#125;)&quot;&gt;贴吧&lt;/a&gt;&lt;a href=&quot;http://zhidao.baidu.com/q?ct=17&amp;pn=0&amp;tn=ikaslist&amp;rn=10&amp;word=&amp;fr=wwwt&quot; wdfield=&quot;word&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;zhidao&apos;&#125;)&quot;&gt;知道&lt;/a&gt;&lt;a href=&quot;http://music.baidu.com/search?fr=ps&amp;ie=utf-8&amp;key=&quot; wdfield=&quot;key&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;music&apos;&#125;)&quot;&gt;音乐&lt;/a&gt;&lt;a href=&quot;http://image.baidu.com/search/index?tn=baiduimage&amp;ps=1&amp;ct=201326592&amp;lm=-1&amp;cl=2&amp;nc=1&amp;ie=utf-8&amp;word=&quot; wdfield=&quot;word&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;pic&apos;&#125;)&quot;&gt;图片&lt;/a&gt;&lt;a href=&quot;http://v.baidu.com/v?ct=301989888&amp;rn=20&amp;pn=0&amp;db=0&amp;s=25&amp;ie=utf-8&amp;word=&quot; wdfield=&quot;word&quot;   onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;video&apos;&#125;)&quot;&gt;视频&lt;/a&gt;&lt;a href=&quot;http://map.baidu.com/m?word=&amp;fr=ps01000&quot; wdfield=&quot;word&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;map&apos;&#125;)&quot;&gt;地图&lt;/a&gt;&lt;a href=&quot;http://wenku.baidu.com/search?word=&amp;lm=0&amp;od=0&amp;ie=utf-8&quot; wdfield=&quot;word&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;wenku&apos;&#125;)&quot;&gt;文库&lt;/a&gt;&lt;a href=&quot;//www.baidu.com/more/&quot;  onmousedown=&quot;return c(&#123;&apos;fm&apos;:&apos;tab&apos;,&apos;tab&apos;:&apos;more&apos;&#125;)&quot;&gt;更多»&lt;/a&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>这样就获取了整个网页内容.<br><strong>说明</strong><br><code>urlopen(strUrl,data,timeout)</code></p>
+<ul>
+<li>第一个参数URL必传的，第二个参数data是访问URL时要传送的数据，第三个timeout是设置超时时间，后面两个参数不是必传的.</li>
+</ul>
+<p><strong>Get与Post传送数据</strong><br>post与get传送数据是两个比较常用的数据传送方式，一般只需要掌握这两种方式就可以了.</p>
+<p><strong>Get方式传送数据</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line">values = &#123;&#125;</span><br><span class="line">values[<span class="string">'username'</span>] = <span class="string">'136xxxx0839'</span></span><br><span class="line">values[<span class="string">'password'</span>] = <span class="string">'123xxx'</span></span><br><span class="line">data = urllib.urlencode(values)<span class="comment">#这里注意转换格式</span></span><br><span class="line">url = <span class="string">'https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001'</span></span><br><span class="line">getUrl = url+<span class="string">'?'</span>+data</span><br><span class="line">request = urllib2.Request(getUrl)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line"><span class="comment"># print response.read()</span></span><br><span class="line"><span class="keyword">print</span> getUrl</span><br><span class="line"></span><br><span class="line">得到：https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001?username=136xxxx0839&amp;password=123xxx</span><br></pre></td></tr></table></figure>
+<p><strong>post数据传送方式</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">values = &#123;&#125;</span><br><span class="line">values[<span class="string">'username'</span>] = <span class="string">'136xxxx0839'</span></span><br><span class="line">values[<span class="string">'password'</span>] = <span class="string">'123xxx'</span></span><br><span class="line">data = urllib.urlencode(values)</span><br><span class="line">url = <span class="string">'https://accounts.douban.com/login?alias=&amp;redir=https%3A%2F%2Fwww.douban.com%2F&amp;source=index_nav&amp;error=1001'</span></span><br><span class="line">request = urllib2.Request(url,data)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line"><span class="keyword">print</span> response.read()</span><br></pre></td></tr></table></figure>
+<p><strong>两种请求方式差异点：</strong><br><code>post</code>与<code>request</code>方式的数据传输时注意<code>urllib2.Request(url,data)</code>这里面的数据传输</p>
+<p><strong>注意处理请求的headers</strong><br>很多时候我们服务器会检验请求是否来自于浏览器，所以我们需要在请求的头部伪装成浏览器来请求服务器.一般做请求的时候，最好都要伪装成浏览器，防止出现拒绝访问等错误，这也是一种反爬虫的一种策略</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user_agent = &#123;<span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400 QQBrowser/9.7.12661.400'</span>&#125;</span><br><span class="line">header = &#123;<span class="string">'User-Agent'</span>:user_agent&#125;</span><br><span class="line">url = <span class="string">'http://www.qq.com/'</span></span><br><span class="line">request = urllib2.Request(url,headers=header)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line"><span class="keyword">print</span> response.read().decode(<span class="string">'gbk'</span>)<span class="comment">#这里注意一下需要对读取的网页内容进行转码，先要查看一下网页的chatset是什么格式.</span></span><br></pre></td></tr></table></figure>
+<p>在浏览器上打开<code>www.qq.com</code>然后按F12，查看<code>User-Agent</code>:</p>
+<blockquote>
+<p>User-Agent : 有些服务器或 Proxy 会通过该值来判断是否是浏览器发出的请求<br>Content-Type : 在使用 REST 接口时，服务器会检查该值，用来确定 HTTP Body 中的内容该怎样解析。<br>application/xml ： 在 XML RPC，如 RESTful/SOAP 调用时使用<br>application/json ： 在 JSON RPC 调用时使用<br>application/x-www-form-urlencoded ： 浏览器提交 Web 表单时使用<br>在使用服务器提供的 RESTful 或 SOAP 服务时， Content-Type 设置错误会导致服务器拒绝服务</p>
+</blockquote>
+<p>###requests<br><code>requests</code>是Python最为常用的<code>http</code>请求库，也是极其简单的.使用的时候，首先需要对<code>requests</code>进行安装，直接使用Pycharm进行一键安装。</p>
+<p>#####1.响应与编码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.get(url)</span><br><span class="line"><span class="keyword">print</span> type(r)</span><br><span class="line"><span class="keyword">print</span> r.status_code</span><br><span class="line"><span class="keyword">print</span> r.encoding</span><br><span class="line"><span class="comment">#print r.content</span></span><br><span class="line"><span class="keyword">print</span> r.cookies</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">得到：</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">requests</span>.<span class="title">models</span>.<span class="title">Response</span>'&gt;</span></span><br><span class="line"><span class="class">200</span></span><br><span class="line"><span class="class"><span class="title">ISO</span>-8859-1</span></span><br><span class="line">&lt;RequestsCookieJar[&lt;Cookie BDORZ=27315 for .baidu.com/&gt;]&gt;</span><br></pre></td></tr></table></figure>
+<p>#####2.Get请求方式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">values = &#123;<span class="string">'user'</span>:<span class="string">'aaa'</span>,<span class="string">'id'</span>:<span class="string">'123'</span>&#125;</span><br><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.get(url,values)</span><br><span class="line"><span class="keyword">print</span> r.url</span><br><span class="line"></span><br><span class="line">得到：http://www.baidu.com/?user=aaa&amp;id=123</span><br></pre></td></tr></table></figure>
+<p>#####3.Post请求方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">values = &#123;<span class="string">'user'</span>:<span class="string">'aaa'</span>,<span class="string">'id'</span>:<span class="string">'123'</span>&#125;</span><br><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.post(url,values)</span><br><span class="line"><span class="keyword">print</span> r.url</span><br><span class="line"><span class="comment">#print r.text</span></span><br><span class="line"></span><br><span class="line">得到：</span><br><span class="line">http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<p>#####4.请求头headers处理<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">user_agent = &#123;<span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400 QQBrowser/9.7.12661.400'</span>&#125;</span><br><span class="line">header = &#123;<span class="string">'User-Agent'</span>:user_agent&#125;</span><br><span class="line">url = <span class="string">'http://www.baidu.com/'</span></span><br><span class="line">r = requests.get(url,headers=header)</span><br><span class="line"><span class="keyword">print</span> r.content</span><br></pre></td></tr></table></figure></p>
+<p>#####5.响应码code与响应头headers处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.get(url)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> r.status_code == requests.codes.ok:</span><br><span class="line">    <span class="keyword">print</span> r.status_code</span><br><span class="line">    <span class="keyword">print</span> r.headers</span><br><span class="line">    <span class="keyword">print</span> r.headers.get(<span class="string">'content-type'</span>)<span class="comment">#推荐用这种get方式获取头部字段</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r.raise_for_status()</span><br><span class="line">    </span><br><span class="line">得到：</span><br><span class="line"><span class="number">200</span></span><br><span class="line">&#123;<span class="string">'Content-Encoding'</span>: <span class="string">'gzip'</span>, <span class="string">'Transfer-Encoding'</span>: <span class="string">'chunked'</span>, <span class="string">'Set-Cookie'</span>: <span class="string">'BDORZ=27315; max-age=86400; domain=.baidu.com; path=/'</span>, <span class="string">'Server'</span>: <span class="string">'bfe/1.0.8.18'</span>, <span class="string">'Last-Modified'</span>: <span class="string">'Mon, 23 Jan 2017 13:27:57 GMT'</span>, <span class="string">'Connection'</span>: <span class="string">'Keep-Alive'</span>, <span class="string">'Pragma'</span>: <span class="string">'no-cache'</span>, <span class="string">'Cache-Control'</span>: <span class="string">'private, no-cache, no-store, proxy-revalidate, no-transform'</span>, <span class="string">'Date'</span>: <span class="string">'Wed, 17 Jan 2018 07:21:21 GMT'</span>, <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;</span><br><span class="line">text/html</span><br></pre></td></tr></table></figure>
+<p>#####6.cookie处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">url = <span class="string">'https://www.zhihu.com/'</span></span><br><span class="line">r = requests.get(url)</span><br><span class="line"><span class="keyword">print</span> r.cookies</span><br><span class="line"><span class="keyword">print</span> r.cookies.keys()</span><br><span class="line"></span><br><span class="line">得到：</span><br><span class="line">&lt;RequestsCookieJar[&lt;Cookie aliyungf_tc=AQAAACYMglZy2QsAEnaG2yYR0vrtlxfz <span class="keyword">for</span> www.zhihu.com/&gt;]&gt;</span><br><span class="line">[<span class="string">'aliyungf_tc'</span>]</span><br></pre></td></tr></table></figure>
+<p>#####7重定向与历史消息</p>
+<p>处理重定向只是需要设置一下<code>allow_redirects</code>字段即可，将<code>allow_redirectsy</code>设置为<code>True</code>则是允许重定向的，设置为<code>False</code>则禁止重定向的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(url,allow_redirects = <span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">print</span> r.url</span><br><span class="line"><span class="keyword">print</span> r.status_code</span><br><span class="line"><span class="keyword">print</span> r.history</span><br><span class="line"></span><br><span class="line">得到：</span><br><span class="line">http://www.baidu.com/</span><br><span class="line"><span class="number">200</span></span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+<p>#####8.超时设置<br> 超时选项是通过参数<code>timeout</code>来设置的<br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.get(url,timeout = <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<p>#####9.代理设置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxis = &#123;</span><br><span class="line">    <span class="string">'http'</span>:<span class="string">'http://www.baidu.com'</span>,</span><br><span class="line">    <span class="string">'http'</span>:<span class="string">'http://www.qq.com'</span>,</span><br><span class="line">    <span class="string">'http'</span>:<span class="string">'http://www.sohu.com'</span>,</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://www.baidu.com'</span></span><br><span class="line">r = requests.get(url,proxies = proxis)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yoursite.com/2018/01/24/爬虫前准备/" title="爬虫前准备" target="_blank" rel="external">http://yoursite.com/2018/01/24/爬虫前准备/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/pythonchannel" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/pythonchannel" target="_blank"><span class="text-dark">Python绿色通道</span><small class="ml-1x">Python技术布道者</small></a></h3>
+        <div>老司机带你零基础玩转Python 爬虫，数据分析，机器学习，人工智能！</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/01/24/把爬取的数据存储到execl中/" title="把爬取到的数据存储到execl中"><i class="icon icon-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/24/爬虫牛刀小试/" title="爬虫牛刀小试">下一篇&nbsp;&nbsp;<i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>

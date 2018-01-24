@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>爬虫牛刀小试 | Python绿色通道</title>
+  <meta name="description" content="爬虫的抓取方式有好几种，正则表达式，Lxml(xpath)与Beautiful,我在网上查了一下资料，了解到三者之间的使用难度与性能 三种爬虫方式的对比。    抓取方式 性能 使用难度     正则表达式 快 困难   Lxml 快 简单   BeautifulSoup 慢 简单    这样一比较我我选择了Lxml(xpath)的方式了，虽然有三种方式，但肯定是要选择最好的方式来爬虫，这个道理大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫牛刀小试">
+<meta property="og:url" content="http://yoursite.com/2018/01/24/爬虫牛刀小试/index.html">
+<meta property="og:site_name" content="Python绿色通道">
+<meta property="og:description" content="爬虫的抓取方式有好几种，正则表达式，Lxml(xpath)与Beautiful,我在网上查了一下资料，了解到三者之间的使用难度与性能 三种爬虫方式的对比。    抓取方式 性能 使用难度     正则表达式 快 困难   Lxml 快 简单   BeautifulSoup 慢 简单    这样一比较我我选择了Lxml(xpath)的方式了，虽然有三种方式，但肯定是要选择最好的方式来爬虫，这个道理大">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-24T07:57:46.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫牛刀小试">
+<meta name="twitter:description" content="爬虫的抓取方式有好几种，正则表达式，Lxml(xpath)与Beautiful,我在网上查了一下资料，了解到三者之间的使用难度与性能 三种爬虫方式的对比。    抓取方式 性能 使用难度     正则表达式 快 困难   Lxml 快 简单   BeautifulSoup 慢 简单    这样一比较我我选择了Lxml(xpath)的方式了，虽然有三种方式，但肯定是要选择最好的方式来爬虫，这个道理大">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yoursite.com/2018/01/24/爬虫牛刀小试/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Python绿色通道" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/pythonchannel" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Python绿色通道</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Python技术布道者</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳，中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>让自己成长才是头等大事!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python基础/">python基础</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/python基础/" style="font-size: 13px;">python基础</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/归档/2018/01/">一月 2018</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/python-file/" class="title">python_file</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T09:25:34.000Z" itemprop="datePublished">2018-01-24 17:25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python中安装与使用mysql/" class="title">Python中安装与使用mysql</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程2/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程1/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/为什么要学习Python以及Python环境安装/" class="title">为什么要学习Python以及Python环境安装</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-爬虫牛刀小试" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬虫牛刀小试
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/01/24/爬虫牛刀小试/" class="article-date">
+	  <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/01/24/爬虫牛刀小试/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p>爬虫的抓取方式有好几种，<strong>正则表达式，Lxml(xpath)与Beautiful,</strong>我在网上查了一下资料，了解到三者之间的使用难度与性能</p>
+<p>三种爬虫方式的对比。</p>
+<table>
+<thead>
+<tr>
+<th>抓取方式</th>
+<th>性能</th>
+<th>使用难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正则表达式</td>
+<td>快</td>
+<td>困难</td>
+</tr>
+<tr>
+<td>Lxml</td>
+<td>快</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>BeautifulSoup</td>
+<td>慢</td>
+<td>简单</td>
+</tr>
+</tbody>
+</table>
+<p>这样一比较我我选择了Lxml(xpath)的方式了，虽然有三种方式，但肯定是要选择最好的方式来爬虫，这个道理大家都懂，另外有兴趣的朋友也可以去了解另外两种爬虫方式！</p>
+<p>好了现在来讲讲xpath</p>
+<p>由于Xpath属于lxml模块，所以首先需要安装lxml库，老办法直接在file–&gt;setting—project interpreter 一键添加lxml库。</p>
+<p>####xpath简单用法</p>
+<blockquote>
+<p>from lxml import etree</p>
+<p>s=etree.HTML(源码) #将源码转化为能被XPath匹配的格式</p>
+<p>s.xpath(xpath表达式) #返回为一列表,</p>
+</blockquote>
+<p>####基础语法：</p>
+<blockquote>
+<ol>
+<li>// 双斜杠 定位根节点，会对全文进行扫描，在文档中选取所有符合条件的内容，以列表的形式返回。 </li>
+<li>/ 单斜杠 寻找当前标签路径的下一层路径标签或者对当前路标签内容进行操作 </li>
+<li>/text() 获取当前路径下的文本内容 </li>
+<li>/@xxxx 提取当前路径下标签的属性值 </li>
+<li>| 可选符 使用|可选取若干个路径 如//p | //div 即在当前路径下选取所有符合条件的p标签和div标签。 </li>
+<li>. 点 用来选取当前节点 </li>
+<li>.. 双点 选取当前节点的父节点 </li>
+</ol>
+</blockquote>
+<p><strong>学以致用，方能让我们能快速掌握xpath语法功能。</strong></p>
+<p>我们这次需要爬取豆瓣音乐前250条</p>
+<p>打开豆瓣音乐：<a href="https://music.douban.com/top250" target="_blank" rel="noopener">https://music.douban.com/top250</a></p>
+<p>###获取单条数据</p>
+<p>#####1.获取音乐标题</p>
+<p>右键弹出菜单栏 Copy==&gt; Copy Xpath </p>
+<p>这里我们想获取音乐标题，音乐标题的xpath是：<code>xpath://*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/a</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">title = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/a'</span>)</span><br><span class="line"><span class="keyword">print</span> title</span><br></pre></td></tr></table></figure>
+<p>运行代码：<br>居然是空的。！！！<br>这里需要注意一下，浏览器复制的xpath只能作参考，因为浏览器经常会在自己里面增加多余的tbody标签，我们需要手动把这个标签删除<br>删除中间的/tbody后,是这样的，<br><code>title = s.xpath(&#39;//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tr/td[2]/div/a&#39;)</code><br>然后我们再运行代码。<br>得到：<br><code>&lt;Element a at 0x53d26c8&gt;</code></p>
+<p>说明标题被获取到了。<br>因为要获取标题文本，所以xpath表达式要追加/text()<br><code>title = s.xpath(&#39;//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()&#39;)#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</code></p>
+<p>又因为这个s.xpath返回的是一个集合，且集合中只有一个元素所以我再追加一个[0]<br>新的表达式：<br><code>title = s.xpath(&#39;//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()&#39;)[0]#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text(),再追加[0]</code></p>
+<p>重新运行得到结果：<br>We Sing. We Dance. We Steal Things.<br>正是我们想要的标题。</p>
+<p>#####2.获取音乐评分与评价人数</p>
+<p>老办法，先用右键copy评分的xpath :<code>//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/div/span[2]</code><br>复制评价人数的xpath:<code>//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/div/span[3]/text()</code> </p>
+<p>同样的我们要把tbody去掉，然后重新运行代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">title = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">score = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[2]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">numbers = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[3]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line"><span class="keyword">print</span> title,score,numbers</span><br></pre></td></tr></table></figure></p>
+<p>得到：</p>
+<pre><code>    We Sing. We Dance. We Steal Things.
+9.1 
+            (
+                    100395人评价
+            )
+</code></pre><p>#####3.获取音乐链接<br>copy标题的xpath，：<code>//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/a</code></p>
+<p>想获取音乐连接href这里需要，获取这个标签属于,/@xxx可以提取当前路径标签下的属性值<br><code>//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[2]/div/a/@href</code></p>
+<p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">href = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/@href'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">title = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">score = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[2]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">numbers = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[3]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line"><span class="keyword">print</span> href,title,score,numbers</span><br></pre></td></tr></table></figure></p>
+<p>运行代码得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">https://music.douban.com/subject/2995812/ </span><br><span class="line">            We Sing. We Dance. We Steal Things.</span><br><span class="line">        9.1 </span><br><span class="line">                    (</span><br><span class="line">                            100395人评价</span><br><span class="line">                    )</span><br></pre></td></tr></table></figure></p>
+<p>#####5.获取图片地址：<br>找到图片，复制他的xpath地址：<code>//*[@id=&quot;content&quot;]/div/div[1]/div/table[1]/tbody/tr/td[1]/a/img</code></p>
+<p>运行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">href = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/@href'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">title = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">score = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[2]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">numbers = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/div/span[3]/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">imgpath = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[1]/a/img/@src'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取文本，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line"><span class="keyword">print</span> href,title,score,numbers,imgpath</span><br></pre></td></tr></table></figure>
+<p>老套路：<br>得到结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">https://music.douban.com/subject/2995812/ </span><br><span class="line">            We Sing. We Dance. We Steal Things.</span><br><span class="line">        9.1 </span><br><span class="line">                    (</span><br><span class="line">                            100395人评价</span><br><span class="line">                    )</span><br><span class="line">                 https://img3.doubanio.com/spic/s2967252.jpg</span><br></pre></td></tr></table></figure></p>
+<p>但是这只是获取了一条数据，如果获取多条数据呢？</p>
+<p>###获取多条数据</p>
+<p>我们再看第二条数据，第三条数据,第四条数据<br>得到他们的xpath:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">title = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[1]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">title2 = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[2]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">title3 = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[3]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line">title4 = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table[4]/tr/td[2]/div/a/text()'</span>)[<span class="number">0</span>]<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line"><span class="keyword">print</span> title,title2,title3,title4</span><br></pre></td></tr></table></figure></p>
+<p>得到：</p>
+<pre><code>We Sing. We Dance. We Steal Things.
+
+Viva La Vida
+
+华丽的冒险
+
+范特西
+</code></pre><p>对比他们的xpath，发现只有table序号不一样，我们可以就去掉序号，得到通用的xpath信息：<br>运行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">titles = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table/tr/td[2]/div/a/text()'</span>)<span class="comment">#因为要获取标题，所以我需要这个当前路径下的文本，所以使用/text()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">    <span class="keyword">print</span> title.strip()</span><br></pre></td></tr></table></figure>
+<p>得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">We Sing. We Dance. We Steal Things.</span><br><span class="line">Viva La Vida</span><br><span class="line"></span><br><span class="line">华丽的冒险</span><br><span class="line"></span><br><span class="line">范特西</span><br><span class="line"></span><br><span class="line">後。青春期的詩</span><br><span class="line"></span><br><span class="line">是时候</span><br><span class="line"></span><br><span class="line">Lenka</span><br><span class="line">Start from Here</span><br><span class="line"></span><br><span class="line">旅行的意义</span><br><span class="line">太阳</span><br><span class="line"></span><br><span class="line">Once (Soundtrack)</span><br><span class="line"></span><br><span class="line">Not Going Anywhere</span><br><span class="line"></span><br><span class="line">American Idiot</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">無與倫比的美麗</span><br><span class="line"></span><br><span class="line">亲爱的...我还不知道</span><br><span class="line"></span><br><span class="line">城市</span><br><span class="line"></span><br><span class="line">O</span><br><span class="line">Wake Me Up When September Ends</span><br><span class="line"></span><br><span class="line">叶惠美</span><br><span class="line"></span><br><span class="line">七里香</span><br><span class="line"></span><br><span class="line">21</span><br><span class="line">My Life Will...</span><br><span class="line">寓言</span><br><span class="line">你在烦恼什么</span><br></pre></td></tr></table></figure></p>
+<p>其它的信息如：链接地址，评分，评价人数都可以用同样的办法来获取，现在我同时获取多条数据，因为每页数据是25条，所以：<br>完整代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># coding:utf-8</span><br><span class="line">from lxml import etree</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &apos;https://music.douban.com/top250&apos;</span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line"></span><br><span class="line">hrefs = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/a/@href&apos;)</span><br><span class="line">titles = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/a/text()&apos;)</span><br><span class="line">scores = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/div/span[2]/text()&apos;)</span><br><span class="line">numbers = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/div/span[3]/text()&apos;)</span><br><span class="line">imgs = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[1]/a/img/@src&apos;)</span><br><span class="line"></span><br><span class="line">for i in range(25):</span><br><span class="line">    print hrefs[i],titles[i],scores[i],numbers[i],imgs[i]</span><br></pre></td></tr></table></figure>
+<p>得到：<br>一大批数据了，我就不展示了。有兴趣可以直接copy代码运行.,注意你得装上lxml与requests库.</p>
+<p><strong>我们也发现了问题每一个xpath路径特别长，能不能精简一下呢？</strong></p>
+<p>#####5. 精简一下xpath路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hrefs = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/a/@href&apos;)</span><br><span class="line">titles = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/a/text()&apos;)</span><br><span class="line">scores = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/div/span[2]/text()&apos;)</span><br><span class="line">numbers = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[2]/div/div/span[3]/text()&apos;)</span><br><span class="line">imgs = s.xpath(&apos;//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr/td[1]/a/img/@src&apos;)</span><br></pre></td></tr></table></figure>
+<p>观察发现获取几个关键字段的xpath前缀都是 <code>//*[@id=&quot;content&quot;]/div/div[1]/div/table/tr</code> 那我能不能把这些东西提出来呢，让后面的不同的自己去追加，另外这样写也不用管每个页面到底有多少条数据，只管查就行了。所以代码做了一下精简。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'https://music.douban.com/top250'</span></span><br><span class="line"></span><br><span class="line">html = requests.get(url).text</span><br><span class="line">s = etree.HTML(html)</span><br><span class="line">trs = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table/tr'</span>)  <span class="comment">#先提取tr之前的节点集合</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> tr <span class="keyword">in</span> trs: <span class="comment">#遍历tr</span></span><br><span class="line">    href = tr.xpath(<span class="string">'./td[2]/div/a/@href'</span>)[<span class="number">0</span>]  <span class="comment">#注意新节点是tr下的节点 </span></span><br><span class="line">    title = tr.xpath(<span class="string">'./td[2]/div/a/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">    score = tr.xpath(<span class="string">'./td[2]/div/div/span[2]/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">    number = tr.xpath(<span class="string">'./td[2]/div/div/span[3]/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">    img = tr.xpath(<span class="string">'./td[1]/a/img/@src'</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">print</span> href,title,score,number,img</span><br></pre></td></tr></table></figure>
+<p>得到的结果和之前是一样的。</p>
+<p>但是，但是，这只是一个页面的数据，我现在想爬取多个页面的数据，怎么办呢？</p>
+<p>###获取个多页面数据.</p>
+<p>观察一下翻页路径：<br><a href="https://music.douban.com/top250?start=0" target="_blank" rel="noopener">https://music.douban.com/top250?start=0</a><br><a href="https://music.douban.com/top250?start=25" target="_blank" rel="noopener">https://music.douban.com/top250?start=25</a><br><a href="https://music.douban.com/top250?start=50" target="_blank" rel="noopener">https://music.douban.com/top250?start=50</a></p>
+<p>有没有发现页面只是后面start参数发生了改变，且增长为每次25，并且250条数据正好是10页。<br>所以我可以遍历这个页面。<br>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">url = <span class="string">'https://music.douban.com/top250?start=&#123;&#125;'</span>.format(i*<span class="number">25</span>)</span><br><span class="line"><span class="keyword">print</span> url</span><br></pre></td></tr></table></figure></p>
+<p>得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">https://music.douban.com/top250?start=0</span><br><span class="line">https://music.douban.com/top250?start=25</span><br><span class="line">https://music.douban.com/top250?start=50</span><br><span class="line">https://music.douban.com/top250?start=75</span><br><span class="line">https://music.douban.com/top250?start=100</span><br><span class="line">https://music.douban.com/top250?start=125</span><br><span class="line">https://music.douban.com/top250?start=150</span><br><span class="line">https://music.douban.com/top250?start=175</span><br><span class="line">https://music.douban.com/top250?start=200</span><br><span class="line">https://music.douban.com/top250?start=225</span><br></pre></td></tr></table></figure>
+<p>正是自己要的结果。</p>
+<p>好了最后我们把代码拼装在一起，并注意每个方法的用途。</p>
+<p>###完整代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取页面地址</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUrl</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">     url = <span class="string">'https://music.douban.com/top250?start=&#123;&#125;'</span>.format(i*<span class="number">25</span>)</span><br><span class="line">     scrapyPage(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#爬取每页数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scrapyPage</span><span class="params">(url)</span>:</span></span><br><span class="line">    html = requests.get(url).text</span><br><span class="line">    s = etree.HTML(html)</span><br><span class="line">    trs = s.xpath(<span class="string">'//*[@id="content"]/div/div[1]/div/table/tr'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> tr <span class="keyword">in</span> trs:</span><br><span class="line">        href = tr.xpath(<span class="string">'./td[2]/div/a/@href'</span>)[<span class="number">0</span>]</span><br><span class="line">        title = tr.xpath(<span class="string">'./td[2]/div/a/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">        score = tr.xpath(<span class="string">'./td[2]/div/div/span[2]/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">        number = tr.xpath(<span class="string">'./td[2]/div/div/span[3]/text()'</span>)[<span class="number">0</span>]</span><br><span class="line">        img = tr.xpath(<span class="string">'./td[1]/a/img/@src'</span>)[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">print</span> href, title, score, number, img</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>  <span class="string">'__main__'</span>:</span><br><span class="line">    getUrl()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yoursite.com/2018/01/24/爬虫牛刀小试/" title="爬虫牛刀小试" target="_blank" rel="external">http://yoursite.com/2018/01/24/爬虫牛刀小试/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/pythonchannel" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/pythonchannel" target="_blank"><span class="text-dark">Python绿色通道</span><small class="ml-1x">Python技术布道者</small></a></h3>
+        <div>老司机带你零基础玩转Python 爬虫，数据分析，机器学习，人工智能！</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/01/24/爬虫前准备/" title="爬虫前准备"><i class="icon icon-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/24/防止iP被封/" title="爬虫防止IP被封">下一篇&nbsp;&nbsp;<i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>

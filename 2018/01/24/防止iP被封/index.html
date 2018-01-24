@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>爬虫防止IP被封 | Python绿色通道</title>
+  <meta name="description" content="继续老套路，这两天我爬取了猪八戒上的一些数据 网址是：http://task.zbj.com/t-ppsj/p1s5.html，可能是由于爬取的数据量有点多吧，结果我的IP被封了，需要自己手动来验证解封ip,但这显然阻止了我爬取更多的数据了。 下面是我写的爬取猪八戒的被封IP的代码 1234567891011121314151617181920212223242526272829303132333">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫防止IP被封">
+<meta property="og:url" content="http://yoursite.com/2018/01/24/防止iP被封/index.html">
+<meta property="og:site_name" content="Python绿色通道">
+<meta property="og:description" content="继续老套路，这两天我爬取了猪八戒上的一些数据 网址是：http://task.zbj.com/t-ppsj/p1s5.html，可能是由于爬取的数据量有点多吧，结果我的IP被封了，需要自己手动来验证解封ip,但这显然阻止了我爬取更多的数据了。 下面是我写的爬取猪八戒的被封IP的代码 1234567891011121314151617181920212223242526272829303132333">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-24T07:58:16.476Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫防止IP被封">
+<meta name="twitter:description" content="继续老套路，这两天我爬取了猪八戒上的一些数据 网址是：http://task.zbj.com/t-ppsj/p1s5.html，可能是由于爬取的数据量有点多吧，结果我的IP被封了，需要自己手动来验证解封ip,但这显然阻止了我爬取更多的数据了。 下面是我写的爬取猪八戒的被封IP的代码 1234567891011121314151617181920212223242526272829303132333">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://yoursite.com/2018/01/24/防止iP被封/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Python绿色通道" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/pythonchannel" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Python绿色通道</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Python技术布道者</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳，中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            
+            <p>您好，您是第<span id="busuanzi_value_site_uv">0</span>位访客</p>
+            
+            <div class="content">
+                <p>让自己成长才是头等大事!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python基础/">python基础</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/python基础/" style="font-size: 13px;">python基础</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/归档/2018/01/">一月 2018</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/python-file/" class="title">python_file</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T09:25:34.000Z" itemprop="datePublished">2018-01-24 17:25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python中安装与使用mysql/" class="title">Python中安装与使用mysql</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程2/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/Python基础教程1/" class="title">Python基础教程2</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/24/为什么要学习Python以及Python环境安装/" class="title">为什么要学习Python以及Python环境安装</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-防止iP被封" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬虫防止IP被封
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/01/24/防止iP被封/" class="article-date">
+	  <time datetime="2018-01-24T07:37:05.000Z" itemprop="datePublished">2018-01-24 15:37</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/01/24/防止iP被封/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p>继续老套路，这两天我爬取了猪八戒上的一些数据 网址是：<code>http://task.zbj.com/t-ppsj/p1s5.html</code>，可能是由于爬取的数据量有点多吧，结果我的IP被封了，需要自己手动来验证解封ip,但这显然阻止了我爬取更多的数据了。</p>
+<p><strong>下面是我写的爬取猪八戒的被封IP的代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUrl</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">33</span>):</span><br><span class="line">        url = <span class="string">'http://task.zbj.com/t-ppsj/p&#123;&#125;s5.html'</span>.format(i+<span class="number">1</span>)</span><br><span class="line">        spiderPage(url)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spiderPage</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    htmlText = requests.get(url).text</span><br><span class="line">    selector = etree.HTML(htmlText)</span><br><span class="line">    tds = selector.xpath(<span class="string">'//*[@class="tab-switch tab-progress"]/table/tr'</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">         <span class="keyword">for</span> td <span class="keyword">in</span> tds:</span><br><span class="line">             price = td.xpath(<span class="string">'./td/p/em/text()'</span>)</span><br><span class="line">             href = td.xpath(<span class="string">'./td/p/a/@href'</span>)</span><br><span class="line">             title = td.xpath(<span class="string">'./td/p/a/text()'</span>)</span><br><span class="line">             subTitle = td.xpath(<span class="string">'./td/p/text()'</span>)</span><br><span class="line">             deadline = td.xpath(<span class="string">'./td/span/text()'</span>)</span><br><span class="line">             price = price[<span class="number">0</span>] <span class="keyword">if</span> len(price)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span>    <span class="comment"># python的三目运算 :为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">             title = title[<span class="number">0</span>] <span class="keyword">if</span> len(title)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             href = href[<span class="number">0</span>] <span class="keyword">if</span> len(href)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             subTitle = subTitle[<span class="number">0</span>] <span class="keyword">if</span> len(subTitle)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             deadline = deadline[<span class="number">0</span>] <span class="keyword">if</span> len(deadline)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             <span class="keyword">print</span> price,title,href,subTitle,deadline</span><br><span class="line">             <span class="keyword">print</span> <span class="string">'---------------------------------------------------------------------------------------'</span></span><br><span class="line">             spiderDetail(href)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'出错'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spiderDetail</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">         htmlText = requests.get(url).text</span><br><span class="line">         selector = etree.HTML(htmlText)</span><br><span class="line">         aboutHref = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/div/p[1]/a/@href'</span>)</span><br><span class="line">         price = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/div/p[1]/text()'</span>)</span><br><span class="line">         title = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/h2/text()'</span>)</span><br><span class="line">         contentDetail = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[2]/div/div[1]/div[1]/text()'</span>)</span><br><span class="line">         publishDate = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[2]/div/div[1]/p/text()'</span>)</span><br><span class="line">         aboutHref = aboutHref[<span class="number">0</span>] <span class="keyword">if</span> len(aboutHref) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span>  <span class="comment"># python的三目运算 :为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">         price = price[<span class="number">0</span>] <span class="keyword">if</span> len(price) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         title = title[<span class="number">0</span>] <span class="keyword">if</span> len(title) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         contentDetail = contentDetail[<span class="number">0</span>] <span class="keyword">if</span> len(contentDetail) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         publishDate = publishDate[<span class="number">0</span>] <span class="keyword">if</span> len(publishDate) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         <span class="keyword">print</span> aboutHref,price,title,contentDetail,publishDate</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       <span class="keyword">print</span> <span class="string">'出错'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">'_main_'</span>:</span><br><span class="line">   getUrl()</span><br></pre></td></tr></table></figure>
+<p>我发现代码运行完后，后面有几页数据没有被爬取，我再也没有办法去访问猪八戒网站了，等过了一段时间才能去访问他们的网站，这就很尴尬了，我得防止被封IP</p>
+<p>如何防止爬取数据的时候被网站封IP这里有一些套路.查了一些套路</p>
+<h5 id="1-修改请求头"><a href="#1-修改请求头" class="headerlink" title="1.修改请求头"></a>1.修改请求头</h5><p>之前的爬虫代码没有添加头部，这里我添加了头部，模拟成浏览器去访问网站</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">user_agent = <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400'</span></span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: user_agent&#125;</span><br><span class="line">htmlText = requests.get(url, headers=headers, proxies=proxies).text</span><br></pre></td></tr></table></figure>
+<h5 id="2-采用代理IP"><a href="#2-采用代理IP" class="headerlink" title="2.采用代理IP"></a>2.采用代理IP</h5><p>当自己的ip被网站封了之后，只能采用代理ip的方式进行爬取，所以每次爬取的时候尽量用代理ip来爬取，封了代理还有代理。</p>
+<p>这里我引用了这个博客的一段代码来生成ip地址:<code>http://blog.csdn.net/lammonpeter/article/details/52917264</code></p>
+<p><strong>生成代理ip,大家可以直接把这个代码拿去用</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># IP地址取自国内髙匿代理IP网站：http://www.xicidaili.com/nn/</span></span><br><span class="line"><span class="comment"># 仅仅爬取首页IP地址就足够一般使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_ip_list</span><span class="params">(url, headers)</span>:</span></span><br><span class="line">    web_data = requests.get(url, headers=headers)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    ips = soup.find_all(<span class="string">'tr'</span>)</span><br><span class="line">    ip_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(ips)):</span><br><span class="line">        ip_info = ips[i]</span><br><span class="line">        tds = ip_info.find_all(<span class="string">'td'</span>)</span><br><span class="line">        ip_list.append(tds[<span class="number">1</span>].text + <span class="string">':'</span> + tds[<span class="number">2</span>].text)</span><br><span class="line">    <span class="keyword">return</span> ip_list</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_random_ip</span><span class="params">(ip_list)</span>:</span></span><br><span class="line">    proxy_list = []</span><br><span class="line">    <span class="keyword">for</span> ip <span class="keyword">in</span> ip_list:</span><br><span class="line">        proxy_list.append(<span class="string">'http://'</span> + ip)</span><br><span class="line">    proxy_ip = random.choice(proxy_list)</span><br><span class="line">    proxies = &#123;<span class="string">'http'</span>: proxy_ip&#125;</span><br><span class="line">    <span class="keyword">return</span> proxies</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    url = <span class="string">'http://www.xicidaili.com/nn/'</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'</span></span><br><span class="line">    &#125;</span><br><span class="line">    ip_list = get_ip_list(url, headers=headers)</span><br><span class="line">    proxies = get_random_ip(ip_list)</span><br><span class="line">    print(proxies)</span><br></pre></td></tr></table></figure>
+<p>好了我用上面的代码给我生成了一批ip地址（有些ip地址可能无效，但只要不封我自己的ip就可以了,哈哈），然后我就可以在我的请求头部添加ip地址</p>
+<p><strong> 给我们的请求添加代理ip</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxies = &#123;</span><br><span class="line">    <span class="string">'http'</span>: <span class="string">'http://124.72.109.183:8118'</span>,</span><br><span class="line">    <span class="string">'http'</span>: <span class="string">'http://49.85.1.79:31666'</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">user_agent = <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400'</span></span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: user_agent&#125;</span><br><span class="line">htmlText = requests.get(url, headers=headers, timeout=<span class="number">3</span>, proxies=proxies).text</span><br></pre></td></tr></table></figure>
+<p>目前知道的就</p>
+<p>最后完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUrl</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">33</span>):</span><br><span class="line">        url = <span class="string">'http://task.zbj.com/t-ppsj/p&#123;&#125;s5.html'</span>.format(i+<span class="number">1</span>)</span><br><span class="line">        spiderPage(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spiderPage</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        proxies = &#123;</span><br><span class="line">            <span class="string">'http'</span>: <span class="string">'http://221.202.248.52:80'</span>,</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        user_agent = <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4295.400'</span></span><br><span class="line"></span><br><span class="line">        headers = &#123;<span class="string">'User-Agent'</span>: user_agent&#125;</span><br><span class="line">        htmlText = requests.get(url, headers=headers,proxies=proxies).text</span><br><span class="line"></span><br><span class="line">        selector = etree.HTML(htmlText)</span><br><span class="line">        tds = selector.xpath(<span class="string">'//*[@class="tab-switch tab-progress"]/table/tr'</span>)</span><br><span class="line">        <span class="keyword">for</span> td <span class="keyword">in</span> tds:</span><br><span class="line">             price = td.xpath(<span class="string">'./td/p/em/text()'</span>)</span><br><span class="line">             href = td.xpath(<span class="string">'./td/p/a/@href'</span>)</span><br><span class="line">             title = td.xpath(<span class="string">'./td/p/a/text()'</span>)</span><br><span class="line">             subTitle = td.xpath(<span class="string">'./td/p/text()'</span>)</span><br><span class="line">             deadline = td.xpath(<span class="string">'./td/span/text()'</span>)</span><br><span class="line">             price = price[<span class="number">0</span>] <span class="keyword">if</span> len(price)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span>    <span class="comment"># python的三目运算 :为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">             title = title[<span class="number">0</span>] <span class="keyword">if</span> len(title)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             href = href[<span class="number">0</span>] <span class="keyword">if</span> len(href)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             subTitle = subTitle[<span class="number">0</span>] <span class="keyword">if</span> len(subTitle)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             deadline = deadline[<span class="number">0</span>] <span class="keyword">if</span> len(deadline)&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">             <span class="keyword">print</span> price,title,href,subTitle,deadline</span><br><span class="line">             <span class="keyword">print</span> <span class="string">'---------------------------------------------------------------------------------------'</span></span><br><span class="line">             spiderDetail(href)</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'出错'</span>,e.message</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spiderDetail</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">         htmlText = requests.get(url).text</span><br><span class="line">         selector = etree.HTML(htmlText)</span><br><span class="line">         aboutHref = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/div/p[1]/a/@href'</span>)</span><br><span class="line">         price = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/div/p[1]/text()'</span>)</span><br><span class="line">         title = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[1]/div/div/h2/text()'</span>)</span><br><span class="line">         contentDetail = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[2]/div/div[1]/div[1]/text()'</span>)</span><br><span class="line">         publishDate = selector.xpath(<span class="string">'//*[@id="utopia_widget_10"]/div[2]/div/div[1]/p/text()'</span>)</span><br><span class="line">         aboutHref = aboutHref[<span class="number">0</span>] <span class="keyword">if</span> len(aboutHref) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span>  <span class="comment"># python的三目运算 :为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">         price = price[<span class="number">0</span>] <span class="keyword">if</span> len(price) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         title = title[<span class="number">0</span>] <span class="keyword">if</span> len(title) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         contentDetail = contentDetail[<span class="number">0</span>] <span class="keyword">if</span> len(contentDetail) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         publishDate = publishDate[<span class="number">0</span>] <span class="keyword">if</span> len(publishDate) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">''</span></span><br><span class="line">         <span class="keyword">print</span> aboutHref,price,title,contentDetail,publishDate</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">       <span class="keyword">print</span> <span class="string">'出错'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">'_main_'</span>:</span><br><span class="line">    getUrl()</span><br></pre></td></tr></table></figure>
+<p>最后程序完美运行，再也没有出现被封IP的情况。当然防止被封IP肯定不止这些了，这还需要进一步探索!</p>
+<p>###最后<br>当然数据我是已经抓取过来了，但是我的数据都没有完美呈现出来，我应该写入execl文件，或者数据库中啊，这样才能方便采用.所以接下来我准备了使用<br>Python操作execl,mysql,mongoDB</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yoursite.com/2018/01/24/防止iP被封/" title="爬虫防止IP被封" target="_blank" rel="external">http://yoursite.com/2018/01/24/防止iP被封/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/pythonchannel" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/pythonchannel" target="_blank"><span class="text-dark">Python绿色通道</span><small class="ml-1x">Python技术布道者</small></a></h3>
+        <div>老司机带你零基础玩转Python 爬虫，数据分析，机器学习，人工智能！</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/01/24/爬虫牛刀小试/" title="爬虫牛刀小试"><i class="icon icon-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;上一篇</a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/24/hello-world/" title="Hello World">下一篇&nbsp;&nbsp;<i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning hidden-xs" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-tit">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="donate-payimg">
+            <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+          </div>
+          <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+          <div class="donate-payselect">
+            <div class="pay_item checked" data-id="alipay" data-src="/images/donate/alipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-alipay" value="alipay" checked>
+                <label class="pay_logo clickable" for="input-alipay"><img src="/images/donate/alipay.jpg" alt="支付宝" /></label>
+              </div>
+            </div>
+            <div class="pay_item" data-id="weipay" data-src="/images/donate/weipayimg.png">
+              <div class="radio">
+                <input type="radio" name="payment" id="input-weipay" value="weipay">
+                <label class="pay_logo clickable" for="input-weipay"><img src="/images/donate/weipay.jpg" alt="微信支付" /></label>
+              </div>
+            </div>
+          </div>
+          <div class="text-grey">
+            <p>扫一扫，即可进行扫码打赏哦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/pythonchannel" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5MTQ4NjA3Nw==&scene=124&uin=&key=&devicetype=Windows+10&version=62060038&lang=zh_CN&a8scene=7&winzoom=1" target="_blank" title="Gongzhonghao" data-toggle=tooltip data-placement=top><i class="icon icon-gongzhonghao"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>
